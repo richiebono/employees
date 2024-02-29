@@ -1,5 +1,5 @@
 # Introduction 
-Employees Project using .NetCore on backend APIs, React and React Admin on frontend, validation using SonarQube.
+Employee Management System Project using .NetCore on backend APIs, React and React Admin on frontend, validation using SonarQube.
 
 ## Docker
 
