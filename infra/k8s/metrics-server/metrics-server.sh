@@ -1,0 +1,2 @@
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm install metrics-server metrics-server/metrics-server --set args[0]="--kubelet-insecure-tls" --set args[1]="--kubelet-preferred-address-types=InternalIP"

@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  
+  bono-employees-infrastructure-sql-data:    
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: bono-employees-infrastructure-sql-data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=H@rd2103211943
+    volumes:
+      - mssql-server-linux-data:/var/opt/mssql/data   
+    ports:
+      - "1433:1433"
+             
+  bono-employees-employeeapi:
+    image: richiebono/bono-employees-employeeapi:latest
+    container_name: bono-employees-employeeapi
+    build:
+      context: ./employees-backend/src/
+      dockerfile: 1-Api/Bono.Employees.Api/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:    
+      - bono-employees-infrastructure-sql-data  
+  
+  bono-employees-employeefrontend:
+    image: richiebono/employees-frontend:latest
+    container_name: bono-employees-employeefrontend
+    build:
+      context: ./employees-frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - bono-employees-employeeapi
+  
+volumes:
+  mssql-server-linux-data:

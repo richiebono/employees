@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    version: v1
+    app: employees-backend
+  name: employees-backend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: employees-backend
+  template:
+    metadata:
+      labels:
+        app: employees-backend
+        version: v1
+        stack: echo
+        interface: rest
+        language: csharp
+    spec:
+      containers:
+        - image: richiebono/bono-employees-employeeapi:latest
+          name: employees-backend
+          imagePullPolicy: IfNotPresent 
+          envFrom:
+            - configMapRef:
+                name: employees-config
+          resources:
+            requests:
+              memory: "5Mi"
+              cpu: "100m"
+            limits:
+              memory: "10Mi"
+              cpu: "200m"
+          startupProbe:
+            httpGet:
+              path: /healthcheck
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3                    
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 80
+            successThreshold: 3
+          ports:
+            - containerPort: 80 # 8080
+              name: http
+              protocol: TCP

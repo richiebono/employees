@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>030aeee4-7275-4062-becd-30d04cb909ec</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\2-Application\Bono.Employees.Application\Bono.Employees.Application.csproj" />
+    <ProjectReference Include="..\..\4-Infrastructure\Bono.Employees.Infrastructure.Auth\Bono.Employees.Infrastructure.Auth.csproj" />
+    <ProjectReference Include="..\..\4-Infrastructure\Bono.Employees.Infrastructure.Data\Bono.Employees.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\..\4-Infrastructure\Bono.Employees.Infrastructure.IoC\Bono.Employees.Infrastructure.IoC.csproj" />
+    <ProjectReference Include="..\..\4-Infrastructure\Bono.Employees.Infrastructure.Swagger\Bono.Employees.Infrastructure.Swagger.csproj" />
+  </ItemGroup>
+
+
+</Project>
