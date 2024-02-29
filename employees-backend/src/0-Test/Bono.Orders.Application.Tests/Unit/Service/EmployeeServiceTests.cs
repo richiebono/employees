@@ -59,7 +59,7 @@ namespace Bono.Employees.Application.Tests.Unit.Services
         [Fact]
         public void PostSendingValidObject()
         {
-            var result = employeeService.Post(new EmployeeViewModel { FirstName = "Richie Bono", LastName = "de Oliveira", Email = "richiebono@gmail.com", JobTitle="Senior Full Stack Developer", DateOfJoining=DateTime.Now.ToShortDateString(), UserId = Guid.NewGuid().ToString(), EmployeeTypeId = Guid.NewGuid().ToString() });
+            var result = employeeService.Post(new EmployeeViewModel { firstName = "Richie Bono", lastName = "de Oliveira", UserId = Guid.NewGuid().ToString(), EmployeeTypeId = Guid.NewGuid().ToString() });
             Assert.True(result.IsValid);
         }
 
@@ -70,7 +70,7 @@ namespace Bono.Employees.Application.Tests.Unit.Services
 
             List<Employee> Employees = new()
             {
-                new Employee(new EmployeeType("Standard"), "First Name", "Last Name", "Email", "Job Title", "2024-02-29", user)
+                new Employee(new EmployeeType("Standard"), "Client 1", user)
             };
             
             var employeeRepository = new Mock<IEmployeeRepository>();

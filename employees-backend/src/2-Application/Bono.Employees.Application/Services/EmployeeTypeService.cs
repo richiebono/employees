@@ -60,16 +60,16 @@ namespace Bono.Employees.Application.Services
 
             List<EmployeeTypeViewModel> employeeTypeViewModels = _mapper.Map<List<EmployeeTypeViewModel>>(employees);
             
-            if (!string.IsNullOrEmpty(filter.Employee) && filter.Employee.ToLower() == "desc")
+            if (!string.IsNullOrEmpty(filter.order) && filter.order.ToLower() == "desc")
             {
-                employeeTypeViewModels = employeeTypeViewModels.EmployeeByDescending(x => x.Type).ToList();
+                employeeTypeViewModels = employeeTypeViewModels.OrderBy(x => x.Type).ToList();
             }
             else
             {
-                employeeTypeViewModels = employeeTypeViewModels.EmployeeBy(x => x.Type).ToList();
+                employeeTypeViewModels = employeeTypeViewModels.OrderBy(x => x.Type).ToList();
             }
 
-            return EmployeeTypeViewModels.Skip(filter.start).Take(filter.size+1).ToList();
+            return employeeTypeViewModels.Skip(filter.start).Take(filter.size+1).ToList();
         }
 
         public int Count(FilterViewModel filter)

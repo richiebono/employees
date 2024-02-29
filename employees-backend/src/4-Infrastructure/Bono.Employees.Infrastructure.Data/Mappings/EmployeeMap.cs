@@ -12,11 +12,11 @@ namespace Bono.Employees.Data.Mappings
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
             builder.Property(x => x.Id).IsRequired();
-            builder.Property(x => x.firstName).IsRequired();
-            builder.Property(x => x.lastName).IsRequired();
-            builder.Property(x => x.email).IsRequired();
-            builder.Property(x => x.jobTitle).IsRequired();
-            builder.Property(x => x.dateOfJoining).IsRequired();
+            builder.Property(x => x.FirstName).IsRequired();
+            builder.Property(x => x.LastName).IsRequired();
+            builder.Property(x => x.Email).IsRequired();
+            builder.Property(x => x.JobTitle).IsRequired();
+            builder.Property(x => x.DateOfJoining).IsRequired();
         }
     }
 }

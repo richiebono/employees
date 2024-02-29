@@ -41,7 +41,7 @@ namespace Bono.Employees.Application.Services
             if (employeeViewModel.Id != Guid.Empty)
                 _validationResult.Add("EmployeeID must be empty");
 
-            if (string.IsNullOrEmpty(employeeViewModel.EmployeeTypeId) || string.IsNullOrEmpty(employeeViewModel.UserId) || string.IsNullOrEmpty(EmployeeViewModel.firstName))
+            if (string.IsNullOrEmpty(employeeViewModel.EmployeeTypeId) || string.IsNullOrEmpty(employeeViewModel.UserId) || string.IsNullOrEmpty(employeeViewModel.FirstName))
             {
                 _validationResult.Add("The sent object was empty.");
                 return _validationResult;
@@ -51,7 +51,7 @@ namespace Bono.Employees.Application.Services
 
             EmployeeType employeeType = _employeeTypeRepository.Find(new Guid(employeeViewModel.EmployeeTypeId));
             User user = _userRepository.Find(new Guid(employeeViewModel.UserId));
-            Employee employee = new(employeeType, employeeViewModel.firstName, user);
+            Employee employee = new(employeeType, employeeViewModel.FirstName, employeeViewModel.LastName, employeeViewModel.Email, employeeViewModel.JobTitle, employeeViewModel.DateOfJoining, user);
 
             _validationResult.Data = _employeeRepository.Create(employee);
 
@@ -64,22 +64,26 @@ namespace Bono.Employees.Application.Services
             if (EmployeeViewModel.Id == Guid.Empty)
                 _validationResult.Add("EmployeeID is not valid");
 
-            Employee Employee = _employeeRepository.Find(x => x.Id == EmployeeViewModel.Id && !x.IsDeleted);
-            if (Employee == null)
+            Employee employee = _employeeRepository.Find(x => x.Id == EmployeeViewModel.Id && !x.IsDeleted);
+            if (employee == null)
                 _validationResult.Add("Employee not found");
 
             if (!_validationResult.Errors.Any())
             {
-                Employee.firstName = EmployeeViewModel.firstName;
-                Employee.Type = _employeeTypeRepository.Find(new Guid(EmployeeViewModel.EmployeeTypeId));
-                Employee.DateUpdated = DateTime.Now;
+                employee.FirstName = EmployeeViewModel.FirstName;
+                employee.LastName = EmployeeViewModel.LastName;
+                employee.Email = EmployeeViewModel.Email;
+                employee.JobTitle = EmployeeViewModel.JobTitle;
+                employee.DateOfJoining = EmployeeViewModel.DateOfJoining;
+                employee.Type = _employeeTypeRepository.Find(new Guid(EmployeeViewModel.EmployeeTypeId));
+                employee.DateUpdated = DateTime.Now;
 
                 try
                 {
-                    bool updated = _employeeRepository.Update(Employee, x => x.Id == Employee.Id);
+                    bool updated = _employeeRepository.Update(employee, x => x.Id == employee.Id);
 
                     if (updated)
-                        _validationResult.Data = Employee;
+                        _validationResult.Data = employee;
                     else
                         _validationResult.Add("Employee not updated");
                 }
@@ -166,9 +170,29 @@ namespace Bono.Employees.Application.Services
             var employees = _employeeRepository.Query(x => 
                 (
                     string.IsNullOrEmpty(filter.search) || 
-                    x.firstName.Contains(filter.search) || 
-                    x.firstName == filter.search
-                ) && 
+                    x.FirstName.Contains(filter.search) || 
+                    x.FirstName == filter.search
+                ) &&
+                (
+                    string.IsNullOrEmpty(filter.search) ||
+                    x.LastName.Contains(filter.search) ||
+                    x.LastName == filter.search
+                ) &&
+                (
+                    string.IsNullOrEmpty(filter.search) ||
+                    x.Email.Contains(filter.search) ||
+                    x.Email == filter.search
+                ) &&
+                (
+                    string.IsNullOrEmpty(filter.search) ||
+                    x.JobTitle.Contains(filter.search) ||
+                    x.JobTitle == filter.search
+                ) &&
+                (
+                    string.IsNullOrEmpty(filter.search) ||
+                    x.DateOfJoining.Contains(filter.search) ||
+                    x.DateOfJoining == filter.search
+                ) &&
                 (
                     string.IsNullOrEmpty(filter.type) || 
                     x.Type.Id == new Guid(filter.type)
@@ -192,71 +216,71 @@ namespace Bono.Employees.Application.Services
                 UserId = x.User.Id.ToString()
             }).ToList();
 
-            if (!string.IsNullOrEmpty(filter.Employee) && filter.Employee.ToLower() == "desc")
+            if (!string.IsNullOrEmpty(filter.order) && filter.order.ToLower() == "desc")
             {
                 if (filter.sort == "id")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.Id).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.Id).ToList();
 
                 if (filter.sort == "firstName")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.firstName).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.FirstName).ToList();
 
                 if (filter.sort == "lastName")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.lastName).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.LastName).ToList();
 
                 if (filter.sort == "email")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.email).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.Email).ToList();
 
                 if (filter.sort == "jobTitle")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.jobTitle).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.JobTitle).ToList();
 
                 if (filter.sort == "dateOfJoining")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.dateOfJoining).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.DateOfJoining).ToList();
 
                 if (filter.sort == "dataCreated")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.DateCreated).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.DateCreated).ToList();
 
                 if (filter.sort == "dateUpdated")
-                    EmployeeViewModels = EmployeeViewModels.EmployeeByDescending(x => x.DateUpdated).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.DateUpdated).ToList();
 
                 if (filter.sort == "EmployeeTypeName")
-                    employeeViewModels = employeeViewModels.EmployeeByDescending(x => x.EmployeeTypeName).ToList();
+                    employeeViewModels = employeeViewModels.OrderByDescending(x => x.EmployeeTypeName).ToList();
             }
             else
             {
                 if (filter.sort == "id")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.Id).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.Id).ToList();
 
                 if (filter.sort == "firstName")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.firstName).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.FirstName).ToList();
 
                 if (filter.sort == "lastName")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.lastName).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.LastName).ToList();
 
                 if (filter.sort == "email")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.email).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.Email).ToList();
 
                 if (filter.sort == "jobTitle")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.jobTitle).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.JobTitle).ToList();
 
                 if (filter.sort == "dateOfJoining")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.dateOfJoining).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.DateOfJoining).ToList();
 
                 if (filter.sort == "dateCreated")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.DateCreated).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.DateCreated).ToList();
 
                 if (filter.sort == "dateUpdated")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.DateUpdated).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.DateUpdated).ToList();
 
                 if (filter.sort == "EmployeeTypeName")
-                    employeeViewModels = employeeViewModels.EmployeeBy(x => x.EmployeeTypeName).ToList();
+                    employeeViewModels = employeeViewModels.OrderBy(x => x.EmployeeTypeName).ToList();
             }
 
-            return EmployeeViewModels.Skip(filter.start).Take(filter.size+1).ToList();
+            return employeeViewModels.Skip(filter.start).Take(filter.size+1).ToList();
         }
 
         public int Count(FilterViewModel filter)
         {
-            return _employeeRepository.Query(x => (filter.search == null || x.firstName.Contains(filter.search)) && !x.IsDeleted).EmployeeBy(x => x.firstName).Count();
+            return _employeeRepository.Query(x => (filter.search == null || x.FirstName.Contains(filter.search)) && !x.IsDeleted).OrderBy(x => x.FirstName).Count();
         }
     }
 }

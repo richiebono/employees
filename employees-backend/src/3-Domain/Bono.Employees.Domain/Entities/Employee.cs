@@ -19,11 +19,12 @@ namespace Bono.Employees.Domain.Entities
         {            
         }
 
-        public Employee(EmployeeType type, string firstName, string email, string jobTitle, string dateOfJoining, User user)
+        public Employee(EmployeeType type, string firstName, string lastName, string email, string jobTitle, string dateOfJoining, User user)
         {
             Id = Guid.NewGuid();
             Type = type;
             FirstName = firstName;
+            LastName = lastName;
             Email = email;
             JobTitle = jobTitle;
             DateOfJoining = dateOfJoining;

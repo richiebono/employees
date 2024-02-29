@@ -53,7 +53,7 @@ namespace Bono.Employees.Data.Extensions
                     new EmployeeType("Assistant"),
                     new EmployeeType("Analyst"),
                     new EmployeeType("Leader"),
-                    new EmployeeType("Manager")
+                    new EmployeeType("Manager"),
                     new EmployeeType("CEO")
                 );
 
