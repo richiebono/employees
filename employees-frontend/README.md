@@ -76,7 +76,7 @@ To run the tests, after the dependencies are installed, run `yarn test`.
 
 `yarn test:coverage` to generate the test coverage report in the files.
 
-IMPORTANT: It would help if you opened docker-compose.yaml on the root folder and comment "bono-employees-employeefrontend" application then execute the docker-compose.yaml to be able to test the frontend locally.
+IMPORTANT: It would help if you opened docker-compose.yaml on the root folder and comment "bono-employees-frontend" application then execute the docker-compose.yaml to be able to test the frontend locally.
 
 ## ✈️ Deploy
 

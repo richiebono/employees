@@ -21,7 +21,7 @@ spec:
         language: csharp
     spec:
       containers:
-        - image: richiebono/bono-employees-employeeapi:latest
+        - image: richiebono/bono-employees-api:latest
           name: employees-backend
           imagePullPolicy: IfNotPresent 
           envFrom:

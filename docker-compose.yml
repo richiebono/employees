@@ -13,9 +13,9 @@ services:
     ports:
       - "1433:1433"
              
-  bono-employees-employeeapi:
-    image: richiebono/bono-employees-employeeapi:latest
-    container_name: bono-employees-employeeapi
+  bono-employees-api:
+    image: richiebono/bono-employees-api:latest
+    container_name: bono-employees-api
     build:
       context: ./employees-backend/src/
       dockerfile: 1-Api/Bono.Employees.Api/Dockerfile
@@ -24,16 +24,16 @@ services:
     depends_on:    
       - bono-employees-infrastructure-sql-data  
   
-  bono-employees-employeefrontend:
+  bono-employees-frontend:
     image: richiebono/employees-frontend:latest
-    container_name: bono-employees-employeefrontend
+    container_name: bono-employees-frontend
     build:
       context: ./employees-frontend/
       dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
-      - bono-employees-employeeapi
+      - bono-employees-api
   
 volumes:
   mssql-server-linux-data:

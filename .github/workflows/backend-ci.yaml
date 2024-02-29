@@ -35,7 +35,7 @@ jobs:
     needs: [test-backend]
     env:
       DOCKER_REPOSITORY: richiebono
-      IMAGE_NAME: bono-employees-employeeapi
+      IMAGE_NAME: bono-employees-api
       IMAGE_TAG: ${{github.run_number}}
       WORKING_DIRECTORY: .
                          

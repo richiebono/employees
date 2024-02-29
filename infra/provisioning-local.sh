@@ -6,7 +6,7 @@ docker pull quay.io/metallb/controller:v0.13.7
 docker pull quay.io/metallb/speaker:v0.13.7
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.6.2
 docker pull mcr.microsoft.com/mssql/server:2019-CU16-ubuntu-20.04
-docker pull richiebono/bono-employees-employeeapi:latest
+docker pull richiebono/bono-employees-api:latest
 docker pull richiebono/employees-frontend:latest
 
 echo "Load Images into Kind"
@@ -14,7 +14,7 @@ kind load docker-image quay.io/metallb/controller:v0.13.7 --name employees-clust
 kind load docker-image quay.io/metallb/speaker:v0.13.7 --name employees-cluster
 kind load docker-image k8s.gcr.io/metrics-server/metrics-server:v0.6.2 --name employees-cluster
 kind load docker-image mcr.microsoft.com/mssql/server:2019-CU16-ubuntu-20.04 --name employees-cluster
-kind load docker-image richiebono/bono-employees-employeeapi:latest --name employees-cluster
+kind load docker-image richiebono/bono-employees-api:latest --name employees-cluster
 kind load docker-image richiebono/employees-frontend:latest --name employees-cluster
 
 echo "Provisioning MetalLB"
