@@ -152,7 +152,6 @@ Use the following credentials to authenticate for the first time on the backend 
 email: richiebono@gmail.com
 password: admin@123
 
-
 Access the frontend URL:
 
 ```
