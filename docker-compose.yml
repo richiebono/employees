@@ -24,16 +24,16 @@ services:
     depends_on:    
       - bono-employees-infrastructure-sql-data  
   
-  bono-employees-frontend:
-    image: richiebono/employees-frontend:latest
-    container_name: bono-employees-frontend
-    build:
-      context: ./employees-frontend/
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - bono-employees-api
+  # bono-employees-frontend:
+  #   image: richiebono/employees-frontend:latest
+  #   container_name: bono-employees-frontend
+  #   build:
+  #     context: ./employees-frontend/
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - bono-employees-api
   
 volumes:
   mssql-server-linux-data:
