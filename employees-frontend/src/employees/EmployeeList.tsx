@@ -130,19 +130,6 @@ const EmployeeList = () => {
                     <TextField label="resources.employees.fields.email" source="email" cellClassName="title" />
                     <TextField label="resources.employees.fields.jobTitle" source="jobTitle" cellClassName="title" />
                     <TextField label="resources.employees.fields.dateOfJoining" source="dateOfJoining" cellClassName="title" />
-                    <TextField label="resources.employees.fields.userName" source="userName" cellClassName="title" />
-                    <DateField
-                        label="resources.employees.fields.dateCreated"
-                        source="dateCreated"
-                        sortByOrder="DESC"
-                        cellClassName="publishedAt"
-                    />
-                    <DateField
-                        label="resources.employees.fields.dateUpdated"
-                        source="dateUpdated"
-                        sortByOrder="DESC"
-                        cellClassName="publishedAt"
-                    />
                     <EmployeeListActionToolbar>
                         <EditButton />
                         <ShowButton />

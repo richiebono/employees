@@ -136,6 +136,8 @@ namespace Bono.Employees.Application.Services
 
             Employee employee = _employeeRepository.Find(x => x.Id == EmployeeId && !x.IsDeleted);
 
+            if (employee == null) return null;
+
             return new EmployeeViewModel
             {
                 Id = employee.Id,
@@ -146,10 +148,10 @@ namespace Bono.Employees.Application.Services
                 DateOfJoining = employee.DateOfJoining,
                 DateCreated = employee.DateCreated,
                 DateUpdated = employee.DateUpdated,
-                EmployeeTypeName = employee.Type.Type,
-                UserName = employee.User.UserName,
-                EmployeeTypeId = employee.Type.Id.ToString(),
-                UserId = employee.User.Id.ToString()
+                EmployeeTypeName = employee.Type?.Type,
+                UserName = employee.User?.UserName,
+                EmployeeTypeId = employee.Type?.Id == null ? employee.Type?.Id.ToString() : null,
+                UserId = employee.User?.Id == null ? employee.User?.Id.ToString() : null
             };
         }
 
@@ -167,10 +169,10 @@ namespace Bono.Employees.Application.Services
 
         public IEnumerable<EmployeeViewModel> Filter(FilterViewModel filter)
         {
-            var employees = _employeeRepository.Query(x => 
+            var employees = _employeeRepository.Query(x =>
                 (
-                    string.IsNullOrEmpty(filter.search) || 
-                    x.FirstName.Contains(filter.search) || 
+                    string.IsNullOrEmpty(filter.search) ||
+                    x.FirstName.Contains(filter.search) ||
                     x.FirstName == filter.search
                 ) &&
                 (
@@ -194,7 +196,7 @@ namespace Bono.Employees.Application.Services
                     x.DateOfJoining == filter.search
                 ) &&
                 (
-                    string.IsNullOrEmpty(filter.type) || 
+                    string.IsNullOrEmpty(filter.type) ||
                     x.Type.Id == new Guid(filter.type)
                 ) &&
                 !x.IsDeleted
@@ -211,9 +213,9 @@ namespace Bono.Employees.Application.Services
                 DateCreated = x.DateCreated,
                 DateUpdated = x.DateUpdated,
                 EmployeeTypeName = x.Type.Type,
-                UserName = x.User.UserName,
-                EmployeeTypeId = x.Type.Id.ToString(),
-                UserId = x.User.Id.ToString()
+                UserName = x.User?.UserName,
+                EmployeeTypeId = x.Type?.Id == null ? x.Type?.Id.ToString() : null,
+                UserId = x.User?.Id == null ? x.User?.Id.ToString() : null
             }).ToList();
 
             if (!string.IsNullOrEmpty(filter.order) && filter.order.ToLower() == "desc")
@@ -275,7 +277,7 @@ namespace Bono.Employees.Application.Services
                     employeeViewModels = employeeViewModels.OrderBy(x => x.EmployeeTypeName).ToList();
             }
 
-            return employeeViewModels.Skip(filter.start).Take(filter.size+1).ToList();
+            return employeeViewModels.Skip(filter.start).Take(filter.size + 1).ToList();
         }
 
         public int Count(FilterViewModel filter)

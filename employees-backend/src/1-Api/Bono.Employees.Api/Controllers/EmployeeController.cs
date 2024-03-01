@@ -2,6 +2,7 @@
 using Bono.Employees.Application.Interfaces;
 using Bono.Employees.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Security.Claims;
 
 namespace Bono.Employees.Api.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
@@ -30,10 +32,10 @@ namespace Bono.Employees.Api.Controllers
             return OkFilter(Employees, "Employees", filterRequest.start, filterRequest.size, this.employeeService.Count(filterRequest));
         }
 
-        [HttpGet("GetAll/{userId}")]
-        public IActionResult GetAll(string userId)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            return Ok(this.employeeService.GetAll(userId));
+            return Ok(this.employeeService.GetAll());
         }
 
         [HttpPost]
