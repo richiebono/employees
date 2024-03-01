@@ -48,7 +48,7 @@ namespace Bono.Employees.Api.Controllers
                 if (result.Errors.Any())
                     return BadRequest(result);
 
-                return Ok(this.employeeService.Post(EmployeeViewModelViewModel).Data);
+                return Ok(result.Data);
             }
             catch (Exception ex)
             {
