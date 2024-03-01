@@ -195,10 +195,10 @@ namespace Bono.Employees.Application.Services
                     x.DateOfJoining.Contains(filter.search) ||
                     x.DateOfJoining == filter.search
                 ) &&
-                (
-                    string.IsNullOrEmpty(filter.type) ||
-                    x.Type.Id == new Guid(filter.type)
-                ) &&
+                // (
+                //     string.IsNullOrEmpty(filter.type) ||
+                //     x.Type.Id == new Guid(filter.type)
+                // ) &&
                 !x.IsDeleted
             ).ToList();
 

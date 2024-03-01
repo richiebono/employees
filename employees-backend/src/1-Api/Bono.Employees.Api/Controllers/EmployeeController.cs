@@ -10,7 +10,6 @@ using System.Security.Claims;
 
 namespace Bono.Employees.Api.Controllers
 {
-    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
