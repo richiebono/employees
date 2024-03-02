@@ -38,7 +38,7 @@ namespace Bono.Employees.Api
                                         .AllowAnyHeader();
                     });
             });
-            
+
             services.AddHealthChecks();
             services.AddControllersWithViews();
             services.AddJwtConfiguration();
@@ -47,15 +47,13 @@ namespace Bono.Employees.Api
             NativeInjector.RegisterServices(services);
             services.AddAutoMapper(typeof(AutoMapperSetup));
             services.AddSwaggerConfiguration("Employees", "V1", "Employee Management API", "Richard Bono de Oliveira", "richiebono@gmail.com");
-            
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -68,13 +66,13 @@ namespace Bono.Employees.Api
             }
 
             app.UseHealthChecks("/healthcheck");
-            app.UseSwaggerConfiguration();            
+            app.UseSwaggerConfiguration();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-                        
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

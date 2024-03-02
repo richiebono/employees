@@ -22,7 +22,6 @@ const EmployeeShow = () => {
                     <TextField source="email" cellClassName="title" />
                     <TextField source="jobTitle" cellClassName="title" />
                     <TextField source="dateOfJoining" cellClassName="title" />
-                    <TextField source="userName" cellClassName="title" />
                     </Tab>
                 </TabbedShowLayout>
             </ShowView>

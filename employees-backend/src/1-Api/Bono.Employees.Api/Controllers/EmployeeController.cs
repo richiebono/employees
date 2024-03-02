@@ -2,6 +2,7 @@
 using Bono.Employees.Application.Interfaces;
 using Bono.Employees.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -30,10 +31,10 @@ namespace Bono.Employees.Api.Controllers
             return OkFilter(Employees, "Employees", filterRequest.start, filterRequest.size, this.employeeService.Count(filterRequest));
         }
 
-        [HttpGet("GetAll/{userId}")]
-        public IActionResult GetAll(string userId)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            return Ok(this.employeeService.GetAll(userId));
+            return Ok(this.employeeService.GetAll());
         }
 
         [HttpPost]
@@ -47,7 +48,7 @@ namespace Bono.Employees.Api.Controllers
                 if (result.Errors.Any())
                     return BadRequest(result);
 
-                return Ok(this.employeeService.Post(EmployeeViewModelViewModel).Data);
+                return Ok(result.Data);
             }
             catch (Exception ex)
             {
