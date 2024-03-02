@@ -167,12 +167,11 @@ You can use the same credentials from the backend to login on frontend.
 
 `$ kind delete cluster --name employees-cluster`
 
-## Exmplanation of the project video
+## Project Explanation Video
 
 ```
 https://www.youtube.com/watch?v=B1GKypCpouE
 ```
-
 
 ## Contact:
 
