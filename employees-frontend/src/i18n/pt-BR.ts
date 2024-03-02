@@ -37,7 +37,12 @@ export const messages = {
             save_and_add: 'Salvar e Adicionar',
             save_and_show: 'Salvar E Visualizar',
         },
-    }    
+    },
+    ra: {
+            page: {
+                empty: 'Nenhum resultado encontrado',
+            }
+        }  
 };
 
 export default messages;
