@@ -6,6 +6,8 @@ using Bono.Employees.Data.Repositories;
 using Bono.Employees.Domain.Interfaces.Repository;
 using Bono.Employees.Domain.Validations;
 using Bono.Employees.Infrastructure.Utils;
+using Bono.Employees.Infrastructure.Data.Repositories;
+using Bono.companies.Application.Services;
 
 namespace Bono.Employees.Infrastructure.IoC
 {
@@ -20,6 +22,7 @@ namespace Bono.Employees.Infrastructure.IoC
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeTypeService, EmployeeTypeService>();
+            services.AddScoped<ICompanyService, CompanyService>();
 
             #endregion
 
@@ -36,15 +39,15 @@ namespace Bono.Employees.Infrastructure.IoC
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeTypeRepository, EmployeeTypeRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             #endregion
 
             #region Utils
-                        
+
             services.AddScoped<Settings, Settings>();
             services.AddScoped<Security, Security>();
             
-
             #endregion 
         }
     }
